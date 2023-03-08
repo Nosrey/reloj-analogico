@@ -1,0 +1,41 @@
+* {
+    box-sizing: border-box;
+}
+
+
+/* agrego un fondo rojo a body */
+body {
+    background: linear-gradient(skyblue, dodgerblue);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#contenedor-reloj, #fondo, #hora-digital {
+    width: 300px;
+    height: 300px;
+}
+
+#fondo {
+    background: linear-gradient(white, lightgray);
+    border-radius: 50%;
+    border: 15px solid black;
+}
+ 
+#contenedor-reloj, #manecillas {
+    position: relative;
+}
+
+#fondo, #horas, #minutos, #segundos, #hora-digital {
+    position: absolute
+}
+
+#hora-digital {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 150px;
+    font-size: 130%;
+    opacity: 0.5;
+}

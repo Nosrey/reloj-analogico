@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Reloj</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.2.0/p5.js"></script>
+</head>
+
+<body>
+    <style>
+        :root {
+            --l: 300px
+        }
+
+        body {
+            background: rgb(253, 242, 251);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        #contenedor-reloj {
+            width: var(--l);
+            height: var(--l);
+            position: relative;
+        }
+
+        #fondo,
+        #mSegundo,
+        #mMinuto,
+        #mHora,
+        #puntos {
+            position: absolute;
+        }
+
+        #elementos-svg {
+            position: relative;
+        }
+
+        #fondo {
+            width: var(--l);
+            height: var(--l);
+            background: lightgray;
+            box-shadow: inset -5px -5px 5px 3px white,
+                inset 5px 5px 5px 3px black,
+                -5px -5px 5px 3px white,
+                5px 5px 5px 3px black;
+            border-radius: 50%;
+            opacity: 0.3;
+
+        }
+    </style>
+    <div id="contenedor-reloj">
+        <div id="fondo">
+        </div>
+        <div id="elementos-svg">
+            <svg id="puntos" width="300" height="300">
+            </svg>
+            <svg id="mHora" width="300" height="300">
+                <line x1="150" y1="150" x2="150" y2="70" stroke="black" stroke-width="4" />
+            </svg>
+            <svg id="mMinuto" width="300" height="300">
+                <line x1="150" y1="150" x2="150" y2="30" stroke="black" stroke-width="4" />
+            </svg>
+            <svg id="mSegundo" width="300" height="300">
+                <line x1="150" y1="170" x2="150" y2="30" stroke="red" stroke-width="2" />
+            </svg>
+        </div>
+    </div>
+
+    <script>
+        function setup() {
+            noCanvas()
+            frameRate(1)
+
+            let html = `
+            <circle 
+                cx="150" 
+                cy="150" 
+                r="5" 
+                stroke="transparent" 
+                fill="black" 
+            />
+            `
+            for (let i = 0; i < 60; i++) {
+                html += `
+                <circle 
+                    cx="${(130 * cos(2 * PI * i / 60)) + 150}" 
+                    cy="${(130 * sin(2 * PI * i / 60)) + 150}" 
+                    r="${i % 15 == 0 ? 4 : i % 5 == 0 ? 2 : 1}" 
+                    stroke="transparent" 
+                    fill="rgba(0,0,0,0.5)" 
+                    stroke-width="1"
+                />`
+            }
+            select("#puntos").html(html)
+        }
+
+        function draw() {
+            let angulo_segundo = 360 * second() / 60
+            let angulo_minuto = 360 * minute() / 60
+            let angulo_hora = 360 * (hour() % 12) / 12
+
+            select("#mSegundo").style("transform", `rotate(${angulo_segundo}deg)`)
+            select("#mMinuto").style("transform", `rotate(${angulo_minuto}deg)`)
+            select("#mHora").style("transform", `rotate(${angulo_hora}deg)`)
+        }
+    </script>
+</body>
+
+</html>
